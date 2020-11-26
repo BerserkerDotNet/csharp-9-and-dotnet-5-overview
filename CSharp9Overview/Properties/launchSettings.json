@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CSharp9Overview": {
+      "commandName": "Project",
+      "commandLineArgs": "\"This is an argument\""
+    }
+  }
+}
