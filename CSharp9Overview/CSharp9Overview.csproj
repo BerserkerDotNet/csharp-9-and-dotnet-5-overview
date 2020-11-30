@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,16 +23,21 @@
   </ItemGroup>
 
   <!--<PropertyGroup>
-    <PublishTrimmed>false</PublishTrimmed>
-    <TrimMode>copyused</TrimMode>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>link</TrimMode>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
-    <PublishSingleFile>false</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
-  </PropertyGroup>
-  
-  <ItemGroup>
+  </PropertyGroup>-->
+
+  <!--<ItemGroup>
     <TrimmerRootAssembly Include="System.Xml.ReaderWriter" />
   </ItemGroup>-->
+  
+  <!--
+  <TrimMode>link</TrimMode>
+  <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+  -->
 
 </Project>
   

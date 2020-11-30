@@ -1,15 +1,18 @@
 ﻿using CSharp9Overview.Interfaces;
 using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using static System.Console;
 
-#region .NET 5 overview
+#region .NET 5 overview & Top level programs
 
-/*if (OperatingSystem.IsWindows())
+WriteLine("Top level programs actually work.");
+WriteLine($"You can even have args: {(args.Length > 0 ? args[0] : string.Empty)}!");
+WriteLine($"Currently running on: {Environment.OSVersion}");
+await ShowMessageWithDelay(3000, "You can use await with top level programs!");
+
+if (OperatingSystem.IsWindows())
 {
     using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\dotnet\Setup\InstalledVersions\x64\sharedhost");
     if (key?.GetValue("Version") is string sharedVersion)
@@ -24,23 +27,14 @@ using static System.Console;
 }
 else if (OperatingSystem.IsLinux())
 {
-    WriteLine("Running on LInux no registry is available!");
-}*/
-
-#endregion
-
-#region Top level programs
-
-/*WriteLine("Top level programs actually work.");
-WriteLine($"You can even have args: {(args.Length > 0 ? args[0] : string.Empty)}!");
-WriteLine($"Currently running on: {Environment.OSVersion}");
-await ShowMessageWithDelay(3000, "You can use await with top level programs!");*/
+    WriteLine("Running on LInux registry is not available!");
+}
 
 #endregion
 
 #region Records
 
-/*var bob = new Developer("Bob", "Salivan", 80_000);
+var bob = new Developer("Bob", "Salivan", 80_000);
 Print(bob);
 
 var jane = new Manager("Jane", "Morgan") 
@@ -80,43 +74,26 @@ var bobWithNewSkills = bobWithSkills with
 WriteLine($"Is BobWithSkills equal to BobWithNewSkills: { bobWithSkills == bobWithNewSkills }");
 
 var (first, last, salary) = bobWithSkills;
-WriteLine($"You can deconstruct the record: {first} {last}, {salary}");*/
+WriteLine($"You can deconstruct the record: {first} {last}, {salary}");
 
 #endregion
 
 #region Target-typed new expressions 
 
-/*Manager sam = new("Sam", "Goodwill")
+Manager sam = new("Sam", "Goodwill")
 {
     BonusPercentage = 0.1f,
     BaseSalary = 110_000,
 };
 
-Developer[] developers = { new("dev", "1", 10), new("dev", "2", 10), new("dev", "3", 10) };*/
-
-#endregion
-
-#region Pattern matching (Range and logical matching)
-
-/*CalculateTax(null);
-CalculateTax(new Developer("Mr", "Zero", 0));
-CalculateTax(new Developer("John", "Doe", 110_000));
-CalculateTax(new Developer("Sam", "Mapels", 210_000));
-CalculateTax(new Developer("Mr", "Negative", -100_000));*/
+Developer[] developers = { new("dev", "1", 10), new("dev", "2", 10), new("dev", "3", 10) };
 
 #endregion
 
 #region Source generators
 
-/*DI.DIService.GetService<ITaxCalculationService>().Calculate();
 HelloWorldGenerated.HelloWorld.SayHello();
-WriteLine("Employees count: " + CSV.Employees.All.Count());*/
-
-#endregion
-
-#region Trimming
-
-// LoadXmlViaReflection();
+DI.DIService.GetService<ICar>().CheckAllSystems();
 
 #endregion
 
@@ -133,24 +110,6 @@ async Task ShowMessageWithDelay(int delay, string message)
     WriteLine(message);
 }
 
-void CalculateTax(Employee employee)
-{
-    var tax = employee switch
-    {
-        Developer d => d.Salary switch
-        {
-            <= 0 => 0f,
-            < 100_000 => d.Salary * 0.1f,
-            >= 100_000 and <= 200_000 => d.Salary * 0.25f,
-            > 200_000 => d.Salary * 0.5f,
-        },
-        Manager m => m.BaseSalary * m.BonusPercentage * 0.35f,
-        Employee e => 0f,
-        null => 0f
-    };
-
-    WriteLine($"{employee?.FirstName} {employee?.LastName} will pay ${tax} in taxes.");
-}
 
 void Print(Employee employee)
 {
@@ -165,13 +124,6 @@ void Print(Employee employee)
         Write("Manager says: ");
         manager.Manage();
     }
-}
-
-void LoadXmlViaReflection()
-{
-    var xmlAssembly = Assembly.LoadFile(Path.Combine(Environment.CurrentDirectory, "System.Xml.ReaderWriter.dll"));
-    var xmlDoc = xmlAssembly.GetTypes().Where(t => t.Name == "XmlDocument");
-    WriteLine(xmlDoc);
 }
 
 abstract record Employee(string FirstName, string LastName);
